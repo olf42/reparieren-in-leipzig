@@ -9,6 +9,7 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 
 import os.path
+from os import rename
 
 #database conf
 db_name = "places.db"
@@ -16,9 +17,8 @@ db_dir = "database"
 db = os.path.join(os.path.dirname(__file__), db_dir, db_name)
 
 #geojsonfile
-gj_filename = "places.geojson"
+gj_filename = "_places.geojson"
 gj_dir = "public"
-gj_file = os.path.join(os.path.dirname(__file__), gj_dir, gj_filename)
 
 #template dir
 temp_lookup = TemplateLookup(directories=['templates'])
@@ -26,6 +26,16 @@ temp_lookup = TemplateLookup(directories=['templates'])
 #delete-link
 del_link1 = "<a href='admin?del="
 del_link2 = "'>Löschen</a>"
+
+#extension for temporary files
+tmp_ext = ".tmp"
+
+#categories
+categories = { 0 : "Technik",
+                1 : "Fahrrad",
+                2 : "Textil",
+                3 : "Holz",
+                4 : "Sonstiges"}
 
 class Places(object):
 
@@ -56,6 +66,7 @@ class Places(object):
                            ?, ?, 
                            ?, ? )''', place)
         data.commit()
+        self.gen_geojson()
 
     def update(self):
         pass
@@ -64,13 +75,21 @@ class Places(object):
         places.execute(''' DELETE FROM places
                            WHERE id=?''', (place_id,))
         data.commit()
-        pass
+        self.gen_geojson()
 
-    def gen_geojson(self, db_extract):
-        schools = []
-        for element in db_extract:
-            desc = "<b>%s</b><br />%s<br /><a href='%s'>Website</a>" % (str(element[1]), str(element[2]), str(element[3]))
-            school = Feature(
+    def gen_geojson(self):
+
+        #fetch dataset for each category
+        for cat in categories:
+            places = []
+            db_extract = self.get_places_by_cat(cat)
+
+            #Create GeoJSON-Feature for each place
+            for element in db_extract:
+                desc = "<b>%s</b><br />%s<br /><a href='%s'>Website</a>" % (str(element[1]),
+                                                                            str(element[2]),
+                                                                            str(element[3]))
+                place = Feature(
                     geometry=Point(
                         (float(element[4]),
                         float(element[5]))),
@@ -78,16 +97,25 @@ class Places(object):
                         "name": element[0],
                         "popupContent" : desc
                         })
-            schools.append(school)
-            gj = FeatureCollection(schools)
-            gj_fo_ = open(gj_file, 'w')
+                places.append(place)
+            #Create FeatureCollection for each category
+            gj = FeatureCollection(places)
+            #target filename
+            gj_file = os.path.join(os.path.dirname(__file__),
+                                    gj_dir,
+                                    categories[cat] + gj_filename)
+            gj_fo = open(gj_file+tmp_ext, 'w+')
+            gj_fo.write(str(gj))
+            gj_fo.close()
+            os.rename(gj_file+tmp_ext, gj_file)
+            print(gj_file)
 
     def get_places(self):
         return places.execute(''' SELECT * FROM places''')
 
     def get_places_by_cat(self, cat):
         if cat in range(0,6):
-            return places.execute(''' SELECT * FROM places WHERE type=?''', cat)
+            return places.execute(''' SELECT * FROM places WHERE type=?''', (cat,))
 
 class Backend(object):
 
@@ -115,6 +143,7 @@ class Backend(object):
                                 kwargs["type"])
                 p_db.add(place_add)
 
+        #use this for debugging
         #for key in kwargs:
         #    print(key, kwargs[key])
 
