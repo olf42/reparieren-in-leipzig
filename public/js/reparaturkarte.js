@@ -14,30 +14,87 @@ function initReady(fn)	{
 }
 
 function initMap() {
-	// set up the map
-	map = new L.Map('map');
+	
 
 	// create the tile layer with correct attribution
-	//var osmUrl='http://{s}.tile.cloudmade.com/API-key/997/256/{z}/{x}/{y}.png';
 	var osmUrl='http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
+
 	//var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib='Data, imagery and map information provided by MapQuest, OpenStreetMap <http://www.openstreetmap.org/copyright> and contributors, ODbL <http://wiki.openstreetmap.org/wiki/Legal_FAQ#I_would_like_to_use_OpenStreetMap_maps._How_should_I_credit_you.#> .'
-	var osm = new L.TileLayer(osmUrl, {minZoom: 12, maxZoom: 18, attribution: osmAttrib});		
-
-	map.setView(new L.LatLng(51.335, 12.37),14);
-	map.addLayer(osm);
+		
+	//osm layer using mapquest	
+	var osm = new L.TileLayer(osmUrl, {minZoom: 12, maxZoom: 18, attribution: osmAttrib});	
 	
-	L.geoJson(places, {
+	//Holz-Werkstätten	
+	var holzPlaces = L.geoJson(holzPlacesList, {
 		pointToLayer: function (feature, latlng) {
-		return L.marker(latlng, {icon: rkIcon2});
+		return L.marker(latlng, {icon: holzIcon});
 		},
 
 		onEachFeature: onEachFeature
-	}).addTo(map);
+	});
+	
+	//Fahrrad-Werkstätten	
+	var fahrradPlaces = L.geoJson(fahrradPlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: fahrradIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+	
+	//Textil-Werkstätten	
+	var textilPlaces = L.geoJson(textilPlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: textilIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+	
+	//Technik-Werkstätten	
+	var technikPlaces = L.geoJson(technikPlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: technikIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+	
+	//Sonstiges-Werkstätten	
+	var sonstigesPlaces = L.geoJson(sonstigesPlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: sonstigesIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+
+	// set up the map
+	map = new L.Map('map', {
+		center: [51.335, 12.37],
+	    	zoom: 14,
+		layers: [osm, 
+			holzPlaces,
+			sonstigesPlaces,
+			textilPlaces,
+			technikPlaces,
+			fahrradPlaces]	
+	});
+
+	var overlays = {
+		    "Technik": technikPlaces,
+		    "Fahrrad": fahrradPlaces,
+		    "Holz": holzPlaces,
+		    "Textil": textilPlaces,
+		    "Sonstiges": sonstigesPlaces
+	};
+	
+	L.control.layers(null, overlays).addTo(map);	
 
 }
 
-var rkIcon2 = L.icon({
+var technikIcon = L.icon({
     iconUrl: 'images/technik.png',
     shadowUrl: 'images/new_shadow.png',
 
@@ -48,9 +105,42 @@ var rkIcon2 = L.icon({
     popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
 });
 
-var rkIcon = L.icon({
-    iconUrl: 'images/marker.png',
-    shadowUrl: 'images/shadow.png',
+var fahrradIcon = L.icon({
+    iconUrl: 'images/fahrrad.png',
+    shadowUrl: 'images/new_shadow.png',
+
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
+    popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
+});
+
+var holzIcon = L.icon({
+    iconUrl: 'images/holz.png',
+    shadowUrl: 'images/new_shadow.png',
+
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
+    popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
+});
+
+var textilIcon = L.icon({
+    iconUrl: 'images/textil.png',
+    shadowUrl: 'images/new_shadow.png',
+
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
+    popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
+});
+
+var sonstigesIcon = L.icon({
+    iconUrl: 'images/sonstiges.png',
+    shadowUrl: 'images/new_shadow.png',
 
     iconSize:     [50, 80], // size of the icon
     shadowSize:   [50, 74], // size of the shadow
@@ -61,10 +151,21 @@ var rkIcon = L.icon({
 
 function initApp()	{
 
-$.getJSON( "places.json", function( data ) {
-	places = data;
-	initMap();
-	console.log( "success" );
+$.getJSON( "Technik_places.json", function( data ) {
+	technikPlacesList = data;
+	$.getJSON( "Holz_places.json", function( data ) {
+		holzPlacesList = data;
+		$.getJSON( "Fahrrad_places.json", function( data ) {
+			fahrradPlacesList = data;
+			$.getJSON( "Textil_places.json", function( data ) {
+				textilPlacesList = data;
+				$.getJSON( "Sonstiges_places.json", function( data ) {
+					sonstigesPlacesList = data;
+					initMap();
+				})
+			})
+		})
+	})
 })
 
 
