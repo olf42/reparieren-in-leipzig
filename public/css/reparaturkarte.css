@@ -12,3 +12,6 @@ html, body {
 	height: 95%;
 }
 
+.leaflet-popup-content	{
+	color: #000;
+}
