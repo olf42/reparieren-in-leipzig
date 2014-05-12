@@ -190,6 +190,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    #bla.add(("name", "beschreibung", "http://sublab.org", 51.33, 12.33, 2))
-    #bla.delete("1")
-    #bla.gen_geojson()
