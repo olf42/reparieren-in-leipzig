@@ -17,7 +17,7 @@ db_dir = "database"
 db = os.path.join(os.path.dirname(__file__), db_dir, db_name)
 
 #geojsonfile
-gj_filename = "_places.geojson"
+gj_filename = "_places.json"
 gj_dir = "public"
 
 #template dir
