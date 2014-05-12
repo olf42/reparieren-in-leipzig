@@ -142,10 +142,10 @@ var sonstigesIcon = L.icon({
     iconUrl: 'images/sonstiges.png',
     shadowUrl: 'images/new_shadow.png',
 
-    iconSize:     [50, 80], // size of the icon
-    shadowSize:   [50, 74], // size of the shadow
-    iconAnchor:   [25, 80], // point of the icon which will correspond to marker's location
-    shadowAnchor: [25, 60],  // the same for the shadow
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
     popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
 });
 
