@@ -1,0 +1,7 @@
+CherryPy==3.3.0
+Mako==0.9.1
+MarkupSafe==0.21
+dumptruck==0.1.5
+geojson==1.0.7
+requests==2.2.1
+scraperwiki==0.3.8
