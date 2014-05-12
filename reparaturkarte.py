@@ -11,6 +11,9 @@ from mako.lookup import TemplateLookup
 import os.path
 from os import rename
 
+#import user credentials
+import credentials
+
 #database conf
 db_name = "places.db"
 db_dir = "database"
@@ -180,9 +183,7 @@ def main():
             "tools.staticdir.dir" : "public",
             "tools.digest_auth.on": True,
             "tools.digest_auth.realm": 'localhost',
-            "tools.digest_auth.users": {
-                "test": "test",
-            }
+            "tools.digest_auth.users": credentials.users
         },
     }
     cherrypy.quickstart(Backend(), config = conf)

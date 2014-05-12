@@ -1,3 +1,4 @@
+credentials.py
 public/*json
 database/*.db
 *.swp
