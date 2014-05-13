@@ -26,6 +26,9 @@ gj_dir = "public"
 #template dir
 temp_lookup = TemplateLookup(directories=['templates'])
 
+#config file
+conf_name = "reparaturkarte.config"
+
 #delete-link
 del_link1 = "<a href='admin?del="
 del_link2 = "'>Löschen</a>"
@@ -75,8 +78,11 @@ class Places(object):
         pass
 
     def delete(self, place_id):
-        places.execute(''' DELETE FROM places
+        try:
+            places.execute(''' DELETE FROM places
                            WHERE id=?''', (place_id,))
+        except:
+            raise
         data.commit()
         self.gen_geojson()
 
@@ -111,7 +117,6 @@ class Places(object):
             gj_fo.write(str(gj))
             gj_fo.close()
             os.rename(gj_file+tmp_ext, gj_file)
-            print(gj_file)
 
     def get_places(self):
         return places.execute(''' SELECT * FROM places''')
@@ -128,15 +133,19 @@ class Backend(object):
 
     @cherrypy.expose
     def admin(self, **kwargs):
+        error = ""
         p_db = Places(db)
         if len(kwargs)>0:
             del_id = 0
             try:
-                    del_id = kwargs["del"]
+                del_id = kwargs["del"]
             except:
-                pass
+                error = "Keyword not found!"
             if del_id:
-                p_db.delete(del_id)
+                try:
+                    p_db.delete(del_id)
+                except:
+                    error = "Error deleting Place"
             elif len(kwargs)==6:
                 place_add = (kwargs["name"],
                                 kwargs["desc"],
@@ -160,8 +169,7 @@ class Backend(object):
                 place.append(element)
             place.append(del_link)
             places_list.append(place)
-        return temp_lookup.get_template("admin.html").render(data=places_list)
-
+        return temp_lookup.get_template("admin.html").render(data=places_list, error=error)
     @cherrypy.expose
     def karte(object):
         return temp_lookup.get_template("karte.html").render()
