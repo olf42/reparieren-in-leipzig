@@ -208,4 +208,30 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+
+    cherrypy.config.update({
+        'server.socket_host': '192.168.1.103',
+        'server.socket_port': 8023,
+        'server.thread_pool_max': 500,
+        'server.thread_pool': 100,
+        'log.screen': True
+    })
+
+    cherrypy.tree.mount(Backend(), '/', {
+        '/': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': os.path.join(current_dir, 'public'),
+        },
+        '/admin': {
+            "tools.staticdir.dir" : os.path.join(current_dir, 'public'),
+            "tools.staticdir.on" : True,
+            "tools.digest_auth.on": True,
+            "tools.digest_auth.realm": 'localhost',
+            "tools.digest_auth.users": credentials.users
+
+        }
+    })
+
+    cherrypy.engine.start()
+    cherrypy.engine.block()
