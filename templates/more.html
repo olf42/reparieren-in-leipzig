@@ -1,0 +1,27 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.html"/>
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Mehr</h1>
+	<p>Perspektivisch wird es eine API geben über die man aktuelle Informationen aus der Datenbasis bekommen kann. Dieses Feature ist aufgrund von Zeitmangel noch nicht implementiert. Wer sich damit auseinanderesetzen möchte kann gerne einen Pull-Request auf github einreichen.
+	</p>
+
+        <h2>GeoJSON</h2>
+	<p>Die aktuell erfassten Reparaturpunkte kann man einerseits als <a href="/list">Liste</a> oder nach Kategorie geordnet als GeoJSON herunterladen.
+
+	</p>
+		<div class="list-group">
+		  <a href="Technik_places.json" class="list-group-item">
+		    Technik-Reparaturpunkte
+		  </a>
+		  <a href="Holz_places.json" class="list-group-item">Holz-Reparaturpunkte
+		  </a>
+		  <a href="Fahrrad_places.json" class="list-group-item">Fahrrad-Reparaturpunkte
+		  </a>
+		  <a href="Textil_places.json" class="list-group-item">Textil-Reparaturpunkte
+		  </a>
+		  <a href="Sonstiges_places.json" class="list-group-item">Sonstige Reparaturpunkte
+		  </a>
+		</div>
+</div>

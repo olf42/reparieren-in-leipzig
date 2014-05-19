@@ -175,6 +175,16 @@ class Backend(object):
         return temp_lookup.get_template("karte.html").render()
 
     @cherrypy.expose
+    def list(object):
+        p_db = Places(db)
+        places = p_db.get_places()
+        return temp_lookup.get_template("liste.html").render(data=places)
+
+    @cherrypy.expose
+    def more(object):
+        return temp_lookup.get_template("more.html").render()
+
+    @cherrypy.expose
     def about(object):
         return temp_lookup.get_template("about.html").render()
 

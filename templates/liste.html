@@ -1,0 +1,45 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.html"/>
+
+      <!-- Main component for a primary marketing message or call to action -->
+      % if error:
+      	<div class="alert alert-dismissable alert-danger">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Mist!</strong> ${error}
+</div>
+      % endif
+      <div class="jumbotron">
+        <h1>Liste</h1>
+	<p>Hier findest du eine Liste aller erfassten Reparaturpunkte.
+	</p>
+
+	
+	<h2>Reparaturpunkte</h2>
+	<table class="table table-striped table-hover">
+		<thead>
+		<tr>
+			<td><b>ID</b></td>
+			<td><b>Name</b></td>
+			<td><b>Beschreibung</b></td>
+			<td><b>Website</b></td>
+			<td><b>Longitude</b></td>
+			<td><b>Latitude</b></td>
+			<td><b>Kategorie</b></td>
+		</tr>
+		</thead>
+		% for row in data:
+			${makerow(row)}			
+		% endfor
+	</table>
+        
+
+	<%def name="makerow(row)">
+	    <tr>
+		    % for name in row:
+			<td>${name}</td>\
+		    % endfor
+	    </tr>
+	</%def>	
+   </div>
+</div>
+
