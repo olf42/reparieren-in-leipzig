@@ -1,4 +1,6 @@
+__pycache__
 credentials.py
 public/*json
+templates/*.swp
 database/*.db
 *.swp
