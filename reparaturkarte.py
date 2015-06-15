@@ -211,7 +211,7 @@ if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.realpath(__file__))
 
     cherrypy.config.update({
-        'server.socket_host': '192.168.1.103',
+        'server.socket_host': '127.0.0.1',
         'server.socket_port': 8023,
         'server.thread_pool_max': 500,
         'server.thread_pool': 100,
