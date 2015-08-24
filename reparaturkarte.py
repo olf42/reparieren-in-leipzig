@@ -170,9 +170,15 @@ class Backend(object):
             place.append(del_link)
             places_list.append(place)
         return temp_lookup.get_template("admin.html").render(data=places_list, error=error)
+
     @cherrypy.expose
     def karte(object):
         return temp_lookup.get_template("karte.html").render()
+
+    @cherrypy.expose
+    def embed(object):
+        return temp_lookup.get_template("embed.html").render()
+
 
     @cherrypy.expose
     def list(object):
