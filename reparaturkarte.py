@@ -194,25 +194,6 @@ class Backend(object):
     def about(object):
         return temp_lookup.get_template("about.html").render()
 
-def main():
-    conf = {
-        "/": {
-            "tools.staticdir.root" : os.path.dirname(os.path.realpath(__file__)),
-            "tools.staticdir.on" : True,
-            "tools.staticdir.dir" : "public",
-        },
-        "/admin": {
-            "tools.staticdir.root" : os.path.dirname(os.path.realpath(__file__)),
-            "tools.staticdir.on" : True,
-            "tools.staticdir.dir" : "public",
-            "tools.digest_auth.on": True,
-            "tools.digest_auth.realm": 'localhost',
-            "tools.digest_auth.users": credentials.users
-        },
-    }
-    cherrypy.quickstart(Backend(), config = conf)
-
-
 if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.realpath(__file__))
 
