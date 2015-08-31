@@ -97,7 +97,7 @@ class Places(object):
 
             #Create GeoJSON-Feature for each place
             for element in db_extract:
-                desc = "<b>%s</b><br />%s<br /><a href='%s'>Website</a>" % (str(element[1]),
+                desc = "<b>%s</b><br />%s<br /><a href='%s' target='_blank'>Website</a>" % (str(element[1]),
                                                                             str(element[2]),
                                                                             str(element[3]))
                 place = Feature(
