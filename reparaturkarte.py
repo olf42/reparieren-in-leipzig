@@ -41,7 +41,9 @@ categories = { 0 : "Technik",
                 1 : "Fahrrad",
                 2 : "Textil",
                 3 : "Holz",
-                4 : "Sonstiges"}
+                4 : "Sonstiges",
+                5 : "Auto",
+                6 : "Schuhe"}
 
 class Places(object):
 
@@ -119,7 +121,10 @@ class Places(object):
             os.rename(gj_file+tmp_ext, gj_file)
 
     def get_places(self):
-        return places.execute(''' SELECT * FROM places''')
+        result = places.execute(''' SELECT * FROM places''')
+        #convert tuple of tuples to list of lists
+        result = [list(line) for line in result]
+        return result
 
     def get_places_by_cat(self, cat):
         if cat in range(0,6):
@@ -159,17 +164,13 @@ class Backend(object):
         #for key in kwargs:
         #    print(key, kwargs[key])
 
-        #add delete link for every place
+        #add delete link for every place, and replace cat-id by string
         places = p_db.get_places()
-        places_list = []
         for row in places:
-            place = []
             del_link = del_link1 + str(row[0]) + del_link2
-            for element in row:
-                place.append(element)
-            place.append(del_link)
-            places_list.append(place)
-        return temp_lookup.get_template("admin.html").render(data=places_list, error=error)
+            row.append(del_link)
+            row[6] = categories[row[6]]
+        return temp_lookup.get_template("admin.html").render(data=places, error=error)
 
     @cherrypy.expose
     def karte(object):
