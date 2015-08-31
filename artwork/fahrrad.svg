@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="202"
+   height="301.00003"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="fahrrad.svg"
+   inkscape:export-filename="/home/olf/Projekte/Reparaturkarte/fahrrad.png"
+   inkscape:export-xdpi="24.059086"
+   inkscape:export-ydpi="24.059086">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3763">
+      <stop
+         style="stop-color:#8e8e8e;stop-opacity:1;"
+         offset="0"
+         id="stop3765" />
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="1"
+         id="stop3767" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3755">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3757" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3759" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3763"
+       id="linearGradient3769"
+       x1="0.25253814"
+       y1="1002.3622"
+       x2="10"
+       y2="1002.3622"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,1.1,0,-105.23622)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5203125"
+     inkscape:cx="121.59626"
+     inkscape:cy="183.77898"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1276"
+     inkscape:window-height="764"
+     inkscape:window-x="0"
+     inkscape:window-y="16"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(96,-751.36216)">
+    <path
+       style="fill:url(#linearGradient3769);fill-opacity:1;stroke:none"
+       d="m 0,942.36218 5,0 5,0 0,95.00002 -5,15 -5,-15 z"
+       id="rect2985"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <circle
+       cy="852.36218"
+       cx="5.0000005"
+       style="fill:#008013;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3771"
+       inkscape:export-filename="/home/olf/Projekte/Reparaturkarte/fahrrad_rund.png"
+       inkscape:export-xdpi="89.10891"
+       inkscape:export-ydpi="89.10891"
+       r="100" />
+    <g
+       id="g4616"
+       transform="matrix(1.5826156,0,0,1.5826156,48.700647,-519.16975)">
+      <ellipse
+         ry="34.345188"
+         rx="33.335033"
+         cy="108.56597"
+         cx="61.114231"
+         transform="matrix(0.56648555,0,0,0.54982417,-88.84113,816.36348)"
+         id="path4587"
+         style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:64.24150848;stroke-opacity:1" />
+      <ellipse
+         ry="34.345188"
+         rx="33.335033"
+         cy="108.56597"
+         cx="61.114231"
+         transform="matrix(0.56648555,0,0,0.54982417,-35.625379,816.36348)"
+         id="path4587-4"
+         style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:64.24150848;stroke-opacity:1" />
+      <path
+         transform="translate(-96,751.36216)"
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path4607"
+         d="M 95.585685,125.10722 84.514617,95.62561 68.059028,125.23349 53.059614,95.551642 40.323321,125.02288 l 27.609598,0.0816"
+         style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cc"
+         transform="translate(-96,751.36216)"
+         inkscape:connector-curvature="0"
+         id="path4609"
+         d="m 52.821081,95.605304 32.072343,0"
+         style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccc"
+         transform="translate(-96,751.36216)"
+         inkscape:connector-curvature="0"
+         id="path4612"
+         d="m 84.032065,96.822946 2.841054,-7.639278 c 8.267818,-0.688338 13.447661,7.639274 3.409265,9.47018"
+         style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccssc"
+         transform="translate(-96,751.36216)"
+         inkscape:connector-curvature="0"
+         id="path4614"
+         d="M 53.159278,96.002197 48.992399,86.84769 c -4.495144,-0.06114 -9.975257,1.641498 -2.588516,1.452094 7.38674,-0.189403 14.331539,-0.189403 9.848987,-0.947018 -4.482552,-0.757614 -7.828682,-0.441942 -7.828682,-0.441942"
+         style="fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
