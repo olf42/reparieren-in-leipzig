@@ -127,7 +127,7 @@ class Places(object):
         return result
 
     def get_places_by_cat(self, cat):
-        if cat in range(0,6):
+        if cat in range(0,7):
             return places.execute(''' SELECT * FROM places WHERE type=?''', (cat,))
 
 class Backend(object):

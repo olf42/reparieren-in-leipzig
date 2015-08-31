@@ -70,6 +70,24 @@ function initMap() {
 		onEachFeature: onEachFeature
 	});
 
+	//Auto-Werkstätten	
+	var autoPlaces = L.geoJson(autoPlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: autoIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+
+	//Schuhe-Werkstätten	
+	var schuhePlaces = L.geoJson(schuhePlacesList, {
+		pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {icon: schuheIcon});
+		},
+
+		onEachFeature: onEachFeature
+	});
+
 	// set up the map
 	map = new L.Map('map', {
 		center: [51.335, 12.37],
@@ -77,6 +95,8 @@ function initMap() {
 		layers: [osm, 
 			holzPlaces,
 			sonstigesPlaces,
+			autoPlaces,
+			schuhePlaces,
 			textilPlaces,
 			technikPlaces,
 			fahrradPlaces]	
@@ -87,7 +107,9 @@ function initMap() {
 		    "Fahrrad": fahrradPlaces,
 		    "Holz": holzPlaces,
 		    "Textil": textilPlaces,
-		    "Sonstiges": sonstigesPlaces
+		    "Sonstiges": sonstigesPlaces,
+		    "Auto": autoPlaces,
+		    "Schuhe": schuhePlaces
 	};
 	
 	L.control.layers(null, overlays).addTo(map);	
@@ -149,6 +171,28 @@ var sonstigesIcon = L.icon({
     popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
 });
 
+var autoIcon = L.icon({
+    iconUrl: 'images/auto.png',
+    shadowUrl: 'images/new_shadow.png',
+
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
+    popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
+});
+
+var schuheIcon = L.icon({
+    iconUrl: 'images/schuhe.png',
+    shadowUrl: 'images/new_shadow.png',
+
+    iconSize:     [54, 80], // size of the icon
+    shadowSize:   [54, 20], // size of the shadow
+    iconAnchor:   [27, 80], // point of the icon which will correspond to marker's location
+    shadowAnchor: [27, 10],  // the same for the shadow
+    popupAnchor:  [0, -80] // point from which the popup should open relative to the iconAnchor
+});
+
 function initApp()	{
 
 $.getJSON( "Technik_places.json", function( data ) {
@@ -161,7 +205,13 @@ $.getJSON( "Technik_places.json", function( data ) {
 				textilPlacesList = data;
 				$.getJSON( "Sonstiges_places.json", function( data ) {
 					sonstigesPlacesList = data;
-					initMap();
+					$.getJSON( "Auto_places.json", function( data ) {
+						autoPlacesList = data;
+						$.getJSON( "Schuhe_places.json", function( data ) {
+							schuhePlacesList = data;
+							initMap();
+						})
+					})
 				})
 			})
 		})
