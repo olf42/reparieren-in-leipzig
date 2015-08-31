@@ -91,7 +91,7 @@ function initMap() {
 	// set up the map
 	map = new L.Map('map', {
 		center: [51.335, 12.37],
-	    	zoom: 14,
+	    	zoom: 13,
 		layers: [osm, 
 			holzPlaces,
 			sonstigesPlaces,
