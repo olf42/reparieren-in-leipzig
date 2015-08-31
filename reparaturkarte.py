@@ -140,6 +140,11 @@ class Backend(object):
     def admin(self, **kwargs):
         error = ""
         p_db = Places(db)
+
+        #update all geojson files to current state in DB
+        p_db.gen_geojson()
+
+        #work with given parameters
         if len(kwargs)>0:
             del_id = 0
             try:
