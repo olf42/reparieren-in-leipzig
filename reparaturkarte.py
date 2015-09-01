@@ -98,6 +98,7 @@ class Places(object):
                                              place[6],
                                              place[0]))
         data.commit()
+        self.gen_geojson()
 
 
     def delete(self, place_id):
@@ -199,6 +200,7 @@ class Backend(object):
     @cherrypy.expose
     def index(self, **kwargs):
         error = ""
+        query = ""
         p_db = Places(db)
 
         #update all geojson files to current state in DB
