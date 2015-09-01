@@ -32,7 +32,7 @@ temp_lookup = TemplateLookup(directories=['templates'])
 conf_name = "reparaturkarte.config"
 
 #delete-link
-del_link1 = "<a href='admin?del="
+del_link1 = "<a href='/admin?del="
 del_link2 = "'>Löschen</a>"
 
 #extension for temporary files
@@ -137,14 +137,40 @@ class Places(object):
         if cat in range(0,7):
             return places.execute(''' SELECT * FROM places WHERE type=?''', (cat,))
 
-class Backend(object):
+class Reparaturkarte(object):
 
     @cherrypy.expose
     def index(self):
         return temp_lookup.get_template("index.html").render()
 
     @cherrypy.expose
-    def admin(self, **kwargs):
+    def karte(object):
+        return temp_lookup.get_template("karte.html").render()
+
+    @cherrypy.expose
+    def embed(object):
+        return temp_lookup.get_template("embed.html").render()
+
+    @cherrypy.expose
+    def list(object):
+        p_db = Places(db)
+        places = p_db.get_places()
+        return temp_lookup.get_template("liste.html").render(data=places)
+
+    @cherrypy.expose
+    def more(object):
+        return temp_lookup.get_template("more.html").render()
+
+    @cherrypy.expose
+    def about(object):
+        return temp_lookup.get_template("about.html").render()
+
+
+
+class Backend(object):
+
+    @cherrypy.expose
+    def index(self, **kwargs):
         error = ""
         p_db = Places(db)
 
@@ -185,18 +211,18 @@ class Backend(object):
         return temp_lookup.get_template("admin.html").render(data=places, error=error)
 
     @cherrypy.expose
-    def adminmap(self, **kwargs):
+    def map(self, **kwargs):
         if len(kwargs)>0:
             try:
                 query = kwargs["q"]
             except:
-                return "Invalid Request <a href='/adminmap'>Zurück</a>"
+                return "Invalid Request <a href='/admin/map'>Zurück</a>"
             if (query == "enter"):
                 return(kwargs["lon"], kwargs["lat"])
         return temp_lookup.get_template("adminmap.html").render()
 
     @cherrypy.expose
-    def adminenter(self, **kwargs):
+    def edit(self, **kwargs):
         lat = 0
         lon = 0
         if len(kwargs)>0:
@@ -209,7 +235,7 @@ class Backend(object):
         return temp_lookup.get_template("adminenter.html").render(lat=lat, lon=lon)
 
     @cherrypy.expose
-    def admingeojson(self, **kwargs):
+    def geojson(self, **kwargs):
         cherrypy.response.headers['Content-Type'] = 'application/json'
         places = []
         if len(kwargs)>0:
@@ -240,7 +266,7 @@ class Backend(object):
                     desc = """{0}<br/>
                             <b>Lon:</b>&nbsp;{1}<br/>
                             <b>Lat:</b>&nbsp;{2}<br/>
-                            <a href='/adminenter?q=enter&lon={1}&lat={2}'>
+                            <a href='/admin/edit?q=enter&lon={1}&lat={2}'>
                             Eintragen</a>""".format(name, lon, lat)
                     place = Feature(geometry=Point((lon, lat)),
                                              properties={
@@ -251,29 +277,6 @@ class Backend(object):
 
         # return empty for invalid request, or no matched object, or FC if successful
         return str(FeatureCollection(places)).encode('ascii', 'xmlcharrefreplace')
-
-    @cherrypy.expose
-    def karte(object):
-        return temp_lookup.get_template("karte.html").render()
-
-    @cherrypy.expose
-    def embed(object):
-        return temp_lookup.get_template("embed.html").render()
-
-
-    @cherrypy.expose
-    def list(object):
-        p_db = Places(db)
-        places = p_db.get_places()
-        return temp_lookup.get_template("liste.html").render(data=places)
-
-    @cherrypy.expose
-    def more(object):
-        return temp_lookup.get_template("more.html").render()
-
-    @cherrypy.expose
-    def about(object):
-        return temp_lookup.get_template("about.html").render()
 
 if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -286,26 +289,22 @@ if __name__ == "__main__":
         'log.screen': True
     })
 
-    cherrypy.tree.mount(Backend(), '/', {
+    cherrypy.tree.mount(Backend(), '/admin', {
         '/': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': os.path.join(current_dir, 'public'),
-        },
-        '/admin': {
             "tools.staticdir.dir" : os.path.join(current_dir, 'public'),
             "tools.staticdir.on" : True,
             "tools.digest_auth.on": True,
             "tools.digest_auth.realm": 'localhost',
             "tools.digest_auth.users": credentials.users
-        },
-        '/adminmap': {
-            "tools.staticdir.dir" : os.path.join(current_dir, 'public'),
-            "tools.staticdir.on" : True,
-            "tools.digest_auth.on": True,
-            "tools.digest_auth.realm": 'localhost',
-            "tools.digest_auth.users": credentials.users
-        }
+            }
     })
+    cherrypy.tree.mount(Reparaturkarte(), '/', {
+        '/': {
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': os.path.join(current_dir, 'public'),
+                     }
+    })
+
 
     cherrypy.engine.start()
     cherrypy.engine.block()

@@ -62,7 +62,7 @@ var neuIcon = L.icon({
 });
 
 function initApp()	{
-	var geojsonfile = "admingeojson?" + window.location.search.substring(1);
+	var geojsonfile = "/admin/geojson?" + window.location.search.substring(1);
 	$.getJSON( geojsonfile, function( data ) {
 		neuPlacesList = data;
 		initMap();
