@@ -342,7 +342,8 @@ if __name__ == "__main__":
         'server.socket_port': 8023,
         'server.thread_pool_max': 500,
         'server.thread_pool': 100,
-        'log.screen': True
+        'log.access_file': os.path.join(current_dir, 'log', 'access.log'),
+        'log.error_file': os.path.join(current_dir, 'log', 'error.log'),
     })
 
     cherrypy.tree.mount(Backend(), '/admin', {
