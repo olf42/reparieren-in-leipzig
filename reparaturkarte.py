@@ -196,6 +196,19 @@ class Backend(object):
         return temp_lookup.get_template("adminmap.html").render()
 
     @cherrypy.expose
+    def adminenter(self, **kwargs):
+        lat = 0
+        lon = 0
+        if len(kwargs)>0:
+            try:
+                query = kwargs["q"]
+                lon = kwargs["lon"]
+                lat = kwargs["lat"]
+            except:
+                pass
+        return temp_lookup.get_template("adminenter.html").render(lat=lat, lon=lon)
+
+    @cherrypy.expose
     def admingeojson(self, **kwargs):
         cherrypy.response.headers['Content-Type'] = 'application/json'
         places = []
@@ -221,14 +234,14 @@ class Backend(object):
                     name = element["display_name"]
                     lat = float(element["lat"])
                     lon = float(element["lon"])
-                    desc = """{0}<br/>
-                            <b>Lon:</b>&nbsp;{1}<br/>
-                            <b>Lat:</b>&nbsp;{2}""".format(name, lon, lat)
                     #desc = """{0}<br/>
                     #        <b>Lon:</b>&nbsp;{1}<br/>
-                    #        <b>Lat:</b>&nbsp;{2}<br/>
-                    #        <a href='/adminenter/q=enter&lon={1}&lat={2}'>
-                    #        Eintragen</a>""".format(name, lon, lat)
+                    #        <b>Lat:</b>&nbsp;{2}""".format(name, lon, lat)
+                    desc = """{0}<br/>
+                            <b>Lon:</b>&nbsp;{1}<br/>
+                            <b>Lat:</b>&nbsp;{2}<br/>
+                            <a href='/adminenter?q=enter&lon={1}&lat={2}'>
+                            Eintragen</a>""".format(name, lon, lat)
                     place = Feature(geometry=Point((lon, lat)),
                                              properties={
                                                     "name": coordinates.index(element),
