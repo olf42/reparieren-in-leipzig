@@ -31,9 +31,9 @@ temp_lookup = TemplateLookup(directories=['templates'])
 #config file
 conf_name = "reparaturkarte.config"
 
-#delete-link
-del_link1 = "<a href='/admin?del="
-del_link2 = "'>Löschen</a>"
+#edit and delete-links
+del_link_raw = "<a href='/admin?del={0}'>Löschen</a>"
+edit_link_raw = "<a href='/admin/edit?q=edit&id={0}'>Bearbeiten</a>"
 
 #extension for temporary files
 tmp_ext = ".tmp"
@@ -81,8 +81,24 @@ class Places(object):
         data.commit()
         self.gen_geojson()
 
-    def update(self):
-        pass
+
+    def update(self, place):
+        places.execute(''' UPDATE places 
+                           SET name = ?,
+                               description = ?,
+                               website = ?,
+                               longitude = ?,
+                               latitude = ?,
+                               type = ?
+                           WHERE id = ?''', (place[1],
+                                             place[2],
+                                             place[3],
+                                             place[4],
+                                             place[5],
+                                             place[6],
+                                             place[0]))
+        data.commit()
+
 
     def delete(self, place_id):
         try:
@@ -132,6 +148,15 @@ class Places(object):
         #convert tuple of tuples to list of lists
         result = [list(line) for line in result]
         return result
+
+    def get_place(self, place_id):
+        final_result = []
+        result = places.execute(''' SELECT * FROM places WHERE id=?''', (place_id,))
+        result = result.fetchall()
+        for line in result:
+            for element in line:
+                final_result.append(element)
+        return final_result
 
     def get_places_by_cat(self, cat):
         if cat in range(0,7):
@@ -183,6 +208,10 @@ class Backend(object):
         if len(kwargs)>0:
             del_id = 0
             try:
+                query = kwargs["q"]
+            except:
+                pass
+            try:
                 del_id = kwargs["del"]
             except:
                 error = "Keyword not found!"
@@ -193,13 +222,21 @@ class Backend(object):
                     error = "Error deleting Place"
             elif len(kwargs)==6:
                 place_add = (kwargs["name"],
-                                kwargs["desc"],
-                                kwargs["website"],
-                                kwargs["long"],
-                                kwargs["lat"],
-                                kwargs["type"])
+                             kwargs["desc"],
+                             kwargs["website"],
+                             kwargs["long"],
+                             kwargs["lat"],
+                             kwargs["type"])
                 p_db.add(place_add)
-
+            if (query == "edit"):
+                place_data = (kwargs["id"],
+                              kwargs["name"],
+                              kwargs["desc"],
+                              kwargs["website"],
+                              kwargs["long"],
+                              kwargs["lat"],
+                              kwargs["type"])
+                p_db.update(place_data)
         #use this for debugging
         #for key in kwargs:
         #    print(key, kwargs[key])
@@ -207,7 +244,9 @@ class Backend(object):
         #add delete link for every place, and replace cat-id by string
         places = p_db.get_places()
         for row in places:
-            del_link = del_link1 + str(row[0]) + del_link2
+            del_link = del_link_raw.format(str(row[0]))
+            edit_link = edit_link_raw.format(str(row[0]))
+            row.append(edit_link)
             row.append(del_link)
             row[6] = categories[row[6]]
         return temp_lookup.get_template("admin.html").render(data=places, error=error)
@@ -230,10 +269,23 @@ class Backend(object):
         if len(kwargs)>0:
             try:
                 query = kwargs["q"]
-                lon = kwargs["lon"]
-                lat = kwargs["lat"]
             except:
                 pass
+            if (query == "enter"):
+                lon = kwargs["lon"]
+                lat = kwargs["lat"]
+            if (query == "edit"):
+                place_id = kwargs["id"]
+                p_db = Places(db)
+                place = p_db.get_place(place_id)
+                print(place)
+                return temp_lookup.get_template("adminedit.html").render(place_id=str(place[0]),
+                                                                         name=str(place[1]),
+                                                                         desc=str(place[2]),
+                                                                         web=str(place[3]),
+                                                                         lat=str(place[4]),
+                                                                         lon=str(place[5]),
+                                                                         cat=int(place[6]),)
         return temp_lookup.get_template("adminenter.html").render(lat=lat, lon=lon)
 
     @cherrypy.expose

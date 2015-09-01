@@ -1,0 +1,133 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.html"/>
+
+      <!-- Main component for a primary marketing message or call to action -->
+      % if error:
+      	<div class="alert alert-dismissable alert-danger">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Mist!</strong> ${error}
+</div>
+      % endif
+      <div class="jumbotron">
+	<h2>Punkt eintragen</h2>
+	  <form class="form-horizontal" method="GET" action="/admin">
+	    <fieldset>
+		    <legend>Hier kannst du Punkte eintragen. Um die Koordinaten zu bekommen, benutze am besten die <a href="/admin/map">Karte mit Suchfunktion</a></legend>
+    <div class="form-group">
+      <label for="inputName" class="col-lg-2 control-label">Name</label>
+      <div class="col-lg-10">
+	      <input type='hidden' name='q' value='edit'>
+	      <input type='hidden' name='id' value='${place_id}'>
+	      <input class="form-control" id="inputName" name="name" placeholder="Name des Ortes" type="text" value='${name}'>
+      </div>
+    </div>
+    <div class="form-group">
+
+      <label for="inputDescription" class="col-lg-2 control-label">Beschreibung</label>
+      <div class="col-lg-10">
+	      <input class="form-control" id="inputDescription" name="desc" placeholder="Eine kurze Beschreibung, z.B. Öffnungszeiten" type="text" value='${desc}'>
+      </div>
+      </div>
+    <div class="form-group">
+
+      <label for="inputWebsite" class="col-lg-2 control-label">Website</label>
+      <div class="col-lg-10">
+	      <input class="form-control" id="inputWebsite" name="website" placeholder="http://..." type="text" value='${web}'>
+      </div>
+      </div>
+    <div class="form-group">
+      <label for="inputLongitude" class="col-lg-2 control-label">Longitude</label>
+      <div class="col-lg-10">
+	      <input class="form-control" id="inputLongitude" name="long" placeholder="Longitude mit Punkt statt Komma" type="text" value='${lon}'>
+      </div>
+      </div>
+    <div class="form-group">
+      <label for="inputLatitude" class="col-lg-2 control-label">Latitude</label>
+      <div class="col-lg-10">
+	      <input class="form-control" id="inputLatitude" name="lat" placeholder="Latitude mit Punkt statt Komma" type="text" value="${lat}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Kategorie</label>
+      <div class="col-lg-10">
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios1" value="0" 
+						   		% if cat==0:
+									checked=""
+						   		% endif
+		type="radio">
+            Technik
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios2" value="1" 
+						   		% if cat==1:
+									checked=""
+						   		% endif
+	    type="radio">
+            Fahrrad
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios3" value="2" 
+						   		% if cat==2:
+									checked=""
+						   		% endif
+	    type="radio">
+            Textil
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios4" value="3" 
+						   		% if cat==3:
+									checked=""
+						   		% endif
+	    type="radio">
+            Holz
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios5" value="4"
+						   		% if cat==4:
+									checked=""
+						   		% endif
+	    type="radio">
+            Sonstiges
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios5" value="5"
+						   		% if cat==5:
+									checked=""
+						   		% endif
+	    type="radio">
+            Auto
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input name="type" id="optionsRadios5" value="6"
+						   		% if cat==6:
+									checked=""
+						   		% endif
+	    type="radio">
+            Schuhe
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary">Bearbeiten</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+      </div>
+
