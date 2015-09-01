@@ -4,3 +4,4 @@ public/*json
 templates/*.swp
 database/*.db
 *.swp
+*.log
