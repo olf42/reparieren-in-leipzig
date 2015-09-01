@@ -155,6 +155,8 @@ class Reparaturkarte(object):
     def list(object):
         p_db = Places(db)
         places = p_db.get_places()
+        for place in places:
+            place[6] = categories[place[6]]
         return temp_lookup.get_template("liste.html").render(data=places)
 
     @cherrypy.expose
