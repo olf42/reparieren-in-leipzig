@@ -285,8 +285,8 @@ class Backend(object):
                                                                          name=str(place[1]),
                                                                          desc=str(place[2]),
                                                                          web=str(place[3]),
-                                                                         lat=str(place[4]),
-                                                                         lon=str(place[5]),
+                                                                         lon=str(place[4]),
+                                                                         lat=str(place[5]),
                                                                          cat=int(place[6]),)
         return temp_lookup.get_template("adminenter.html").render(lat=lat, lon=lon)
 
