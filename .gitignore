@@ -3,5 +3,6 @@ credentials.py
 public/*json
 templates/*.swp
 database/*.db
+*.bak
 *.swp
 *.log
